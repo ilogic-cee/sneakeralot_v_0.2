@@ -1,0 +1,358 @@
+.featuredBrands {
+  padding: 4rem 0;
+  background: var(--white);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out forwards;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: var(--onyx);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--sonic-silver);
+}
+
+.brandsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out 0.2s forwards;
+}
+
+.brandCard {
+  position: relative;
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  padding: 2rem;
+  text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brandCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.brandCard.featured {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+.brandLogo {
+  width: 120px;
+  height: 60px;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.brandCard:hover .brandLogo {
+  opacity: 1;
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.brandInfo {
+  position: relative;
+  z-index: 1;
+}
+
+.brandName {
+  font-size: 1.5rem;
+  color: var(--onyx);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.brandDescription {
+  font-size: 1rem;
+  color: var(--sonic-silver);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.category {
+  padding: 0.25rem 0.75rem;
+  background: var(--cultured);
+  color: var(--sonic-silver);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+}
+
+.brandCard:hover .category {
+  background: var(--salmon-pink);
+  color: var(--white);
+}
+
+.productCount {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.count {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--onyx);
+}
+
+.label {
+  font-size: 1rem;
+  color: var(--sonic-silver);
+}
+
+.viewMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: var(--onyx);
+  font-weight: 500;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.3s ease;
+}
+
+.brandCard:hover .viewMore {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.icon {
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.brandCard:hover .icon {
+  transform: translateX(5px);
+}
+
+.cardOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.7) 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.brandCard:hover .cardOverlay {
+  opacity: 1;
+}
+
+.brandsShowcase {
+  padding: 3rem;
+  background: var(--cultured);
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out 0.4s forwards;
+}
+
+.showcaseContent {
+  flex: 1;
+}
+
+.showcaseTitle {
+  font-size: 2rem;
+  color: var(--onyx);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.showcaseDescription {
+  font-size: 1.125rem;
+  color: var(--sonic-silver);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.showcaseBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: var(--onyx);
+  color: var(--white);
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.showcaseBtn:hover {
+  background: var(--salmon-pink);
+  transform: translateX(5px);
+}
+
+.brandLogos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+}
+
+.showcaseLogo {
+  width: 80px;
+  height: 40px;
+  object-fit: contain;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+
+.showcaseLogo:hover {
+  opacity: 1;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .brandsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .brandCard.featured {
+    grid-column: auto;
+    grid-row: auto;
+  }
+}
+
+@media (max-width: 992px) {
+  .featuredBrands {
+    padding: 3rem 0;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .brandsShowcase {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .showcaseTitle {
+    font-size: 1.75rem;
+  }
+
+  .brandLogos {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .brandsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .brandCard {
+    padding: 1.5rem;
+  }
+
+  .brandLogo {
+    width: 100px;
+    height: 50px;
+  }
+
+  .brandName {
+    font-size: 1.25rem;
+  }
+
+  .count {
+    font-size: 1.5rem;
+  }
+
+  .showcaseBtn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Focus Styles */
+.brandCard:focus {
+  outline: none;
+}
+
+.brandCard:focus-visible {
+  outline: 2px solid var(--salmon-pink);
+  outline-offset: 2px;
+}
+
+.showcaseBtn:focus {
+  outline: none;
+}
+
+.showcaseBtn:focus-visible {
+  outline: 2px solid var(--salmon-pink);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .sectionHeader,
+  .brandsGrid,
+  .brandCard,
+  .viewMore,
+  .icon,
+  .brandsShowcase,
+  .showcaseBtn {
+    animation: none;
+    transition: none;
+  }
+} 

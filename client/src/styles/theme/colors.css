@@ -1,0 +1,53 @@
+:root {
+  /* Primary Colors */
+  --salmon-pink: #ff8f9c;
+  --white: #ffffff;
+  --cultured: #f5f5f5;
+  --onyx: #454545;
+  --sonic-silver: #757575;
+
+  /* Additional Colors */
+  --eerie-black: #1f1f1f;
+  --light-gray: #e5e5e5;
+  --dim-gray: #666666;
+  --davys-gray: #4b4b4b;
+  --spanish-gray: #999999;
+  --quick-silver: #a6a6a6;
+
+  /* Utility Colors */
+  --success: #28a745;
+  --warning: #ffc107;
+  --error: #dc3545;
+  --info: #17a2b8;
+
+  /* Background Colors */
+  --bg-primary: var(--white);
+  --bg-secondary: var(--cultured);
+  --bg-accent: var(--salmon-pink);
+  --color-background-dark: var(--eerie-black);
+  --color-background-light: var(--cultured);
+
+  /* Text Colors */
+  --text-primary: var(--onyx);
+  --text-secondary: var(--sonic-silver);
+  --text-accent: var(--salmon-pink);
+  --text-white: var(--white);
+  --color-text-light: var(--white);
+  --color-text-light-secondary: var(--quick-silver);
+
+  /* Brand Colors */
+  --color-primary: var(--salmon-pink);
+  --color-primary-dark: #ff7a8a;
+  --color-primary-rgb: 255, 143, 156;
+
+  /* Border Colors */
+  --color-border: var(--dim-gray);
+}
+
+/* Dark Mode Colors - if needed later */
+[data-theme="dark"] {
+  --bg-primary: var(--eerie-black);
+  --bg-secondary: var(--davys-gray);
+  --text-primary: var(--white);
+  --text-secondary: var(--quick-silver);
+} 

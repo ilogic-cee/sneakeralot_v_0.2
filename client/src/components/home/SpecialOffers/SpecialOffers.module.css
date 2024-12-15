@@ -1,0 +1,381 @@
+.specialOffers {
+  padding: 4rem 0;
+  background: var(--cultured);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.sectionHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out forwards;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: var(--onyx);
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  color: var(--sonic-silver);
+}
+
+.countdown {
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out 0.2s forwards;
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.timeUnit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+}
+
+.number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--onyx);
+  line-height: 1;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: var(--sonic-silver);
+  margin-top: 0.5rem;
+}
+
+.separator {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--salmon-pink);
+  line-height: 1;
+  margin-top: -0.5rem;
+}
+
+.dealsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 4rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out 0.4s forwards;
+}
+
+.dealCard {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dealCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.imageWrapper {
+  position: relative;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+}
+
+.dealImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.dealCard:hover .dealImage {
+  transform: scale(1.05);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+.dealContent {
+  padding: 2rem;
+}
+
+.dealSubtitle {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: var(--salmon-pink);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.dealTitle {
+  font-size: 1.5rem;
+  color: var(--onyx);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.dealDescription {
+  font-size: 1rem;
+  color: var(--sonic-silver);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.dealDiscount {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.discountLabel {
+  font-size: 1rem;
+  color: var(--sonic-silver);
+}
+
+.discountValue {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--salmon-pink);
+}
+
+.shopNowBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: var(--onyx);
+  color: var(--white);
+  border-radius: 4px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.shopNowBtn:hover {
+  background: var(--salmon-pink);
+  transform: translateX(5px);
+}
+
+.icon {
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.shopNowBtn:hover .icon {
+  transform: translateX(5px);
+}
+
+.newsletter {
+  padding: 3rem;
+  background: var(--white);
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out 0.6s forwards;
+}
+
+.newsletterTitle {
+  font-size: 1.75rem;
+  color: var(--onyx);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.newsletterDescription {
+  font-size: 1rem;
+  color: var(--sonic-silver);
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.subscribeForm {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.inputWrapper {
+  display: flex;
+  gap: 1rem;
+}
+
+.emailInput {
+  flex: 1;
+  padding: 0.875rem 1rem;
+  border: 2px solid var(--cultured);
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.emailInput:focus {
+  outline: none;
+  border-color: var(--salmon-pink);
+}
+
+.subscribeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  background: var(--salmon-pink);
+  color: var(--white);
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.subscribeBtn:hover {
+  background: var(--onyx);
+  transform: translateX(5px);
+}
+
+.subscribeBtn .icon {
+  font-size: 1.25rem;
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+  .specialOffers {
+    padding: 3rem 0;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .timer {
+    padding: 1.5rem;
+  }
+
+  .timeUnit {
+    min-width: 60px;
+  }
+
+  .number {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dealsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .timer {
+    gap: 0.5rem;
+  }
+
+  .timeUnit {
+    min-width: auto;
+  }
+
+  .number {
+    font-size: 1.5rem;
+  }
+
+  .label {
+    font-size: 0.75rem;
+  }
+
+  .separator {
+    font-size: 1.5rem;
+  }
+
+  .newsletter {
+    padding: 2rem 1.5rem;
+  }
+
+  .newsletterTitle {
+    font-size: 1.5rem;
+  }
+
+  .inputWrapper {
+    flex-direction: column;
+  }
+
+  .subscribeBtn {
+    width: 100%;
+  }
+}
+
+/* Focus Styles */
+.emailInput:focus-visible {
+  outline: 2px solid var(--salmon-pink);
+  outline-offset: 2px;
+}
+
+.shopNowBtn:focus,
+.subscribeBtn:focus {
+  outline: none;
+}
+
+.shopNowBtn:focus-visible,
+.subscribeBtn:focus-visible {
+  outline: 2px solid var(--salmon-pink);
+  outline-offset: 2px;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .sectionHeader,
+  .countdown,
+  .dealsGrid,
+  .dealCard,
+  .dealImage,
+  .newsletter,
+  .shopNowBtn,
+  .subscribeBtn {
+    animation: none;
+    transition: none;
+  }
+} 

@@ -1,0 +1,2049 @@
+.hero {
+  position: relative;
+  height: calc(100vh - 80px);
+  min-height: 600px;
+  overflow: hidden;
+  background: var(--color-background-dark);
+  perspective: 1000px;
+  user-select: none;
+  contain: content;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.slider {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  visibility: hidden;
+  transform-style: preserve-3d;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.slide.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.slide.next {
+  transform: translateX(100%) scale(0.8);
+  opacity: 0;
+}
+
+.slide.prev {
+  transform: translateX(-100%) scale(0.8);
+  opacity: 0;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+  padding: 0 4rem;
+  opacity: 0;
+  transform: translateZ(50px);
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.2));
+}
+
+.slide.active .content {
+  animation: contentIn 1s forwards 0.3s;
+}
+
+.subtitle {
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--slide-color);
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  backdrop-filter: blur(10px);
+  transform: translateZ(75px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  color: var(--color-text-light);
+  margin-bottom: 1rem;
+  line-height: 1.1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateZ(100px);
+  letter-spacing: -1px;
+}
+
+.description {
+  font-size: 1.2rem;
+  color: var(--color-text-light-secondary);
+  margin-bottom: 2rem;
+  max-width: 500px;
+  line-height: 1.6;
+  transform: translateZ(75px);
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.2rem 2.4rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  background: var(--slide-color);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(90px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.cta::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: translateX(-100%) skewX(-15deg);
+  transition: transform 0.8s ease;
+}
+
+.cta:hover {
+  transform: translateY(-3px) translateZ(90px) scale(1.02);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.cta:hover::before {
+  transform: translateX(100%) skewX(-15deg);
+}
+
+.cta ion-icon {
+  font-size: 1.4rem;
+  transition: transform 0.3s ease;
+}
+
+.cta:hover ion-icon {
+  transform: translateX(4px);
+}
+
+.imageWrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 65%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transform: scale(1.1) translateZ(-50px);
+  filter: brightness(0.9) contrast(1.1);
+  transition: filter 0.3s ease;
+}
+
+.slide.active .imageWrapper {
+  animation: imageIn 1.2s forwards cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slide:hover .imageWrapper {
+  filter: brightness(1) contrast(1.05);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-background-dark) 0%,
+    rgba(0, 0, 0, 0.8) 40%,
+    transparent 100%
+  );
+  backdrop-filter: blur(5px);
+}
+
+.controls {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 4rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  transform: translateZ(100px);
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(10px);
+  transform: translateZ(100px);
+}
+
+.arrow:hover {
+  background: var(--slide-color);
+  transform: translateZ(100px) scale(1.1);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.arrow:active {
+  transform: translateZ(100px) scale(0.95);
+}
+
+.arrow ion-icon {
+  font-size: 1.6rem;
+  transition: transform 0.3s ease;
+}
+
+.arrow.prev:hover ion-icon {
+  transform: translateX(-2px);
+}
+
+.arrow.next:hover ion-icon {
+  transform: translateX(2px);
+}
+
+.indicators {
+  display: flex;
+  gap: 0.75rem;
+  transform: translateZ(100px);
+}
+
+.indicator {
+  width: 3.5rem;
+  height: 4px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.indicator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--slide-color);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+
+.indicator:hover::before {
+  transform: translateX(-50%);
+}
+
+.indicator.active {
+  background: transparent;
+}
+
+.indicator.active::before {
+  transform: translateX(0);
+}
+
+@keyframes contentIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px) translateZ(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) translateZ(50px);
+  }
+}
+
+@keyframes imageIn {
+  from {
+    opacity: 0;
+    transform: scale(1.2) translateZ(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateZ(-50px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .title {
+    font-size: 3.5rem;
+  }
+  
+  .imageWrapper {
+    width: 55%;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero {
+    height: calc(100vh - 70px);
+    min-height: 500px;
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+
+  .description {
+    font-size: 1.1rem;
+  }
+
+  .imageWrapper {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .content {
+    padding: 0 2rem;
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .imageWrapper {
+    opacity: 0.3;
+    width: 100%;
+  }
+
+  .overlay {
+    background: linear-gradient(
+      0deg,
+      var(--color-background-dark) 0%,
+      transparent 100%
+    );
+  }
+
+  .controls {
+    left: 2rem;
+    bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 450px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .cta {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  .controls {
+    gap: 1rem;
+  }
+}
+
+.previewContainer {
+  position: absolute;
+  bottom: 6rem;
+  right: 4rem;
+  display: flex;
+  gap: 1rem;
+  z-index: 20;
+  transform: translateZ(100px);
+  perspective: 1000px;
+}
+
+.preview {
+  width: 120px;
+  height: 70px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.5;
+  transform: scale(0.95) rotateY(5deg);
+  transform-style: preserve-3d;
+}
+
+.preview::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.preview:hover {
+  opacity: 0.9;
+  transform: scale(1.05) rotateY(0deg) translateZ(20px);
+}
+
+.preview:hover::after {
+  opacity: 1;
+}
+
+.preview.active {
+  opacity: 1;
+  transform: scale(1.1) rotateY(0deg) translateZ(30px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  transition: transform 0.3s ease;
+}
+
+.preview:hover .previewImage {
+  transform: scale(1.1);
+}
+
+.previewOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.7) 0%,
+    transparent 100%
+  );
+  transition: opacity 0.3s ease;
+  border-radius: 12px;
+}
+
+.preview:hover .previewOverlay {
+  opacity: 0.3;
+}
+
+.zoomControl {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transform: translateZ(100px);
+  background: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+}
+
+.zoomButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.zoomButton::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.zoomButton:hover::before {
+  opacity: 1;
+}
+
+.zoomButton:hover {
+  background: var(--slide-color);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.zoomButton:active {
+  transform: translateY(0);
+}
+
+.zoomButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.zoomButton ion-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.zoomButton:hover:not(:disabled) ion-icon {
+  transform: scale(1.2);
+}
+
+@keyframes slideFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px) translateZ(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateZ(100px);
+  }
+}
+
+.zoomControl {
+  animation: slideFromRight 0.6s ease-out;
+}
+
+@keyframes floatAnimation {
+  0%, 100% {
+    transform: translateY(0) translateZ(100px);
+  }
+  50% {
+    transform: translateY(-5px) translateZ(100px);
+  }
+}
+
+.preview.active {
+  animation: floatAnimation 3s ease-in-out infinite;
+}
+
+.progressBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.progressFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--slide-color);
+  transition: width 0.1s linear;
+}
+
+.hotspot {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hotspotIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--slide-color);
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.hotspotRing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  border: 2px solid var(--slide-color);
+  border-radius: 50%;
+  opacity: 0.5;
+  animation: pulseRing 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.hotspot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  background: radial-gradient(circle, var(--slide-color) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.hotspot:hover::after {
+  opacity: 0.2;
+}
+
+.hotspot:hover .hotspotIcon {
+  transform: scale(1.1);
+  background: var(--slide-color);
+  color: white;
+}
+
+.hotspotContent {
+  position: absolute;
+  top: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 1rem;
+  border-radius: 8px;
+  width: max-content;
+  max-width: 250px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.hotspotContent::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 12px;
+  height: 12px;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.hotspotContent h3 {
+  color: var(--slide-color);
+  font-size: 1rem;
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.hotspotContent p {
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.hotspot.active .hotspotContent {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+@keyframes pulseRing {
+  0% {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Enhanced mobile styles */
+@media (max-width: 768px) {
+  .hotspotIcon {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  .hotspotRing {
+    width: 50px;
+    height: 50px;
+  }
+
+  .hotspotContent {
+    position: fixed;
+    bottom: 2rem;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: calc(100% - 2rem);
+    max-width: none;
+    border-radius: 12px;
+    padding: 1.2rem;
+    z-index: 100;
+  }
+
+  .hotspotContent::before {
+    display: none;
+  }
+
+  .hotspot.active .hotspotContent {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .preview {
+    width: 80px;
+    height: 50px;
+  }
+
+  .previewContainer {
+    bottom: 5rem;
+    right: 50%;
+    transform: translateX(50%) translateZ(100px);
+  }
+}
+
+/* Enhanced animations */
+.slide.active .hotspot {
+  animation: fadeInScale 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation-delay: calc(var(--index) * 0.1s + 0.8s);
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .hotspotContent {
+    display: none;
+  }
+
+  .hotspot.active .hotspotContent {
+    display: block;
+  }
+
+  .preview:hover {
+    transform: none;
+  }
+
+  .preview.active {
+    transform: scale(1.05);
+  }
+}
+
+/* Enhanced loading states */
+.imageWrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  animation: shimmer 1.5s infinite;
+  transform: translateX(-100%);
+  will-change: transform;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.quickView {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+
+.quickViewContent {
+  background: var(--color-background-dark);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 1200px;
+  max-height: 90vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+  transform: translateY(20px);
+  animation: slideUp 0.4s forwards 0.2s;
+}
+
+.closeButton {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 5;
+}
+
+.closeButton:hover {
+  background: var(--slide-color);
+  transform: rotate(90deg);
+}
+
+.productGallery {
+  position: relative;
+  height: 100%;
+  min-height: 500px;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.view360, .standardView {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.view360 img, .standardView img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.viewToggle {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--color-text-light);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.viewToggle:hover {
+  background: var(--slide-color);
+}
+
+.productInfo {
+  padding: 2rem;
+  overflow-y: auto;
+  max-height: 80vh;
+}
+
+.productInfo h3 {
+  font-size: 2rem;
+  color: var(--color-text-light);
+  margin: 0 0 1rem;
+}
+
+.priceWrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.price {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--slide-color);
+}
+
+.originalPrice {
+  font-size: 1.2rem;
+  color: var(--color-text-light-secondary);
+  text-decoration: line-through;
+}
+
+.sizeSelector, .colorSelector {
+  margin-bottom: 2rem;
+}
+
+.sizeSelector h4, .colorSelector h4 {
+  font-size: 1rem;
+  color: var(--color-text-light);
+  margin-bottom: 1rem;
+}
+
+.sizeOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sizeOption {
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-text-light);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sizeOption:hover {
+  border-color: var(--slide-color);
+}
+
+.sizeOption.selected {
+  background: var(--slide-color);
+  border-color: var(--slide-color);
+}
+
+.colorOptions {
+  display: flex;
+  gap: 1rem;
+}
+
+.colorOption {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.colorOption::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 2px solid var(--color);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.colorOption.selected::after {
+  opacity: 1;
+}
+
+.colorOption ion-icon {
+  color: white;
+  font-size: 1.2rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.features {
+  margin-bottom: 2rem;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--color-text-light);
+  margin-bottom: 0.75rem;
+}
+
+.feature ion-icon {
+  color: var(--slide-color);
+  font-size: 1.2rem;
+}
+
+.addToCart {
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--slide-color);
+  color: var(--color-text-light);
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.addToCart:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.addToCart:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.quickViewButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--slide-color);
+  color: var(--color-text-light);
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.quickViewButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced hotspot types */
+.hotspot.material .hotspotIcon {
+  background: rgba(var(--color-primary-rgb), 0.2);
+}
+
+.hotspot.feature .hotspotIcon {
+  background: rgba(var(--color-secondary-rgb), 0.2);
+}
+
+.hotspot.360view .hotspotIcon {
+  animation: rotate360 10s linear infinite;
+}
+
+@keyframes rotate360 {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile styles for quick view */
+@media (max-width: 768px) {
+  .quickViewContent {
+    grid-template-columns: 1fr;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    border-radius: 0;
+  }
+
+  .productGallery {
+    height: 50vh;
+    min-height: auto;
+  }
+
+  .productInfo {
+    padding: 1.5rem;
+  }
+
+  .sizeOptions {
+    gap: 0.25rem;
+  }
+
+  .sizeOption {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .colorOption {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .view360 {
+    touch-action: none;
+  }
+
+  .colorOption {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .sizeOption {
+    min-height: 44px;
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Enhanced focus styles */
+.hero:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary);
+}
+
+.hero:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+
+.hero:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-primary);
+}
+
+/* Enhanced button focus styles */
+.arrow:focus,
+.indicator:focus,
+.zoomButton:focus,
+.quickViewButton:focus,
+.sizeOption:focus,
+.colorOption:focus,
+.addToCart:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary), 0 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+.arrow:focus:not(:focus-visible),
+.indicator:focus:not(:focus-visible),
+.zoomButton:focus:not(:focus-visible),
+.quickViewButton:focus:not(:focus-visible),
+.sizeOption:focus:not(:focus-visible),
+.colorOption:focus:not(:focus-visible),
+.addToCart:focus:not(:focus-visible) {
+  box-shadow: none;
+}
+
+/* Skip navigation for keyboard users */
+.skipNav {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--color-primary);
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.2s;
+}
+
+.skipNav:focus {
+  top: 0;
+}
+
+/* Enhanced keyboard focus indicators */
+.hotspot:focus-within {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary), 0 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+.hotspotContent:focus-within {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .arrow,
+  .indicator,
+  .zoomButton,
+  .quickViewButton,
+  .sizeOption,
+  .colorOption,
+  .addToCart {
+    border: 2px solid ButtonText;
+  }
+
+  .arrow:hover,
+  .indicator:hover,
+  .zoomButton:hover,
+  .quickViewButton:hover,
+  .sizeOption:hover,
+  .colorOption:hover,
+  .addToCart:hover {
+    border-color: Highlight;
+  }
+
+  .indicator.active {
+    background: Highlight;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .content,
+  .imageWrapper,
+  .hotspot,
+  .preview,
+  .arrow,
+  .indicator,
+  .zoomButton,
+  .quickViewButton {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .progressBar {
+    display: none;
+  }
+}
+
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.3;
+  z-index: 1;
+}
+
+.parallaxWrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--color-background-dark) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    var(--color-background-dark) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skipLink {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  padding: 1rem 2rem;
+  border-radius: 0 0 8px 8px;
+  z-index: 1000;
+  transition: top 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.skipLink:focus {
+  top: 0;
+  outline: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2), 0 0 0 3px rgba(255, 255, 255, 0.5);
+}
+
+.loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  color: var(--color-text-light);
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.loading::after {
+  content: '';
+  width: 24px;
+  height: 24px;
+  margin-left: 12px;
+  border: 3px solid var(--color-text-light);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Enhanced image loading */
+.slideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.slideImage[loading] {
+  opacity: 0;
+}
+
+/* Improved focus styles */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary), 0 0 0 6px rgba(255, 255, 255, 0.2);
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .parallaxWrapper {
+    transform: none !important;
+  }
+
+  .particles {
+    display: none;
+  }
+
+  .skeleton {
+    animation: none;
+    background: var(--color-background-dark);
+  }
+
+  .loading::after {
+    animation: none;
+  }
+}
+
+/* High contrast mode */
+@media (forced-colors: active) {
+  .skeleton,
+  .loading {
+    background: Canvas;
+    border: 2px solid ButtonText;
+  }
+
+  .skipLink {
+    border: 2px solid ButtonText;
+  }
+}
+
+.imageError {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  color: var(--color-text-light);
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.imageError ion-icon {
+  font-size: 2.5rem;
+  color: var(--color-error);
+}
+
+.imageError p {
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.imageError button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.imageError button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced touch interactions */
+@media (hover: none) {
+  .slide {
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .imageWrapper {
+    touch-action: none;
+  }
+
+  .hotspot {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* Spring animations */
+.slide {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.slide.active {
+  animation: springIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes springIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Enhanced loading states */
+.imageWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.imageWrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: shimmerEffect 2s infinite;
+  pointer-events: none;
+}
+
+@keyframes shimmerEffect {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Enhanced error states */
+.slide.error .imageWrapper {
+  animation: errorPulse 2s infinite;
+}
+
+@keyframes errorPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* Enhanced focus styles for touch targets */
+@media (hover: none) {
+  .arrow,
+  .indicator,
+  .zoomButton,
+  .hotspot {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .sizeOption,
+  .colorOption {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 12px;
+  }
+}
+
+/* Spring physics for slide transitions */
+.slider {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Enhanced animations for interactive elements */
+.hotspot:hover .hotspotIcon {
+  animation: pulseScale 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes pulseScale {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Enhanced error feedback */
+.imageError {
+  animation: fadeInScale 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Improved touch feedback */
+.slide:active {
+  transform: scale(0.98);
+}
+
+/* Enhanced loading transitions */
+.slideImage {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.slideImage[loading] {
+  transform: scale(1.05);
+  filter: blur(10px);
+}
+
+/* Error boundary styles */
+.errorBoundary {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background-dark);
+  color: var(--color-text-light);
+  text-align: center;
+  padding: 2rem;
+}
+
+.errorBoundary h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.errorBoundary p {
+  margin-bottom: 1.5rem;
+}
+
+.errorBoundary button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  background: var(--color-primary);
+  color: var(--color-text-light);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.errorBoundary button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced accessibility focus styles */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary), 0 0 0 6px rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .slideImage,
+  .hotspot,
+  .hotspotIcon,
+  .imageError {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .imageWrapper::before {
+    display: none;
+  }
+}
+
+/* High contrast mode support */
+@media (forced-colors: active) {
+  .imageError button {
+    border: 2px solid ButtonText;
+  }
+
+  .hotspot {
+    border: 2px solid ButtonText;
+  }
+
+  .slideImage {
+    border: 2px solid ButtonText;
+  }
+}
+
+.networkError {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-error);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  z-index: 1000;
+  animation: slideDown 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideDown {
+  from {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+}
+
+/* Enhanced slide transitions */
+.slide {
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+}
+
+.slide.active {
+  animation: slideActive 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideActive {
+  0% {
+    transform: scale(1.1) translateZ(-50px);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05) translateZ(-25px);
+  }
+  100% {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+  }
+}
+
+/* Enhanced loading states */
+.imageWrapper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  animation: shimmerEffect 2s infinite;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Optimized particle canvas */
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.3;
+  z-index: 1;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Enhanced touch feedback */
+@media (hover: none) {
+  .slide:active {
+    transform: scale(0.98);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .hotspot:active .hotspotIcon {
+    transform: scale(0.9);
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .slide,
+  .imageWrapper::before,
+  .hotspot,
+  .particles {
+    animation: none !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  .slide.active {
+    transform: none !important;
+  }
+}
+
+/* High contrast mode */
+@media (forced-colors: active) {
+  .networkError {
+    border: 2px solid ButtonText;
+    background: Canvas;
+    color: ButtonText;
+  }
+}
+
+/* Enhanced focus styles */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary),
+              0 0 0 6px rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  transition: box-shadow 0.2s ease;
+}
+
+/* ... existing styles ... */
+
+/* Performance optimizations */
+.hero {
+  contain: content;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+/* Loading states */
+.pending {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.loadingIndicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.loadingSpinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Enhanced preview thumbnails */
+.preview {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preview:hover {
+  transform: scale(1.05);
+}
+
+.previewProgress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.previewProgressFill {
+  height: 100%;
+  background: #fff;
+  transition: width 0.3s linear;
+}
+
+/* Magnetic snap points */
+.slide {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.slider {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Momentum scrolling */
+.slider {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Enhanced accessibility */
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus styles */
+.hero *:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hero * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode */
+@media (forced-colors: active) {
+  .hero {
+    forced-color-adjust: none;
+  }
+  
+  .preview:hover {
+    outline: 2px solid ButtonText;
+  }
+  
+  .loadingSpinner {
+    border-color: ButtonText;
+  }
+}
+
+/* Print styles */
+@media print {
+  .hero {
+    height: auto;
+    page-break-inside: avoid;
+  }
+  
+  .controls,
+  .previewContainer,
+  .loadingIndicator {
+    display: none;
+  }
+  
+  .slide {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}
+
+/* RTL support */
+[dir="rtl"] .hero {
+  direction: rtl;
+}
+
+[dir="rtl"] .arrow.prev {
+  transform: rotate(180deg);
+}
+
+[dir="rtl"] .arrow.next {
+  transform: rotate(180deg);
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .hero {
+    color-scheme: dark;
+  }
+  
+  .loadingSpinner {
+    border-color: rgba(0, 0, 0, 0.3);
+    border-top-color: #000;
+  }
+}
+
+/* Enhanced touch feedback */
+@media (hover: none) {
+  .preview:active {
+    transform: scale(0.95);
+  }
+  
+  .controls {
+    opacity: 1;
+  }
+}
+
+/* Improved performance on low-end devices */
+@supports (content-visibility: auto) {
+  .hero {
+    content-visibility: auto;
+    contain-intrinsic-size: 700px;
+  }
+}
+
+/* Hardware acceleration */
+.slide,
+.preview,
+.loadingSpinner {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooth image loading */
+.slideImage {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.slideImage.loaded {
+  opacity: 1;
+} 

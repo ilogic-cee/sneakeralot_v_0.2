@@ -1,0 +1,347 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 200px);
+  min-height: 600px;
+  background: var(--cultured);
+  overflow: hidden;
+}
+
+.sliderContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slider {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  position: relative;
+  min-width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 max(2rem, calc((100% - 1200px) / 2));
+  opacity: 0.7;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slideContent {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  animation: slideContent 0.5s ease-out forwards;
+}
+
+.slideImage {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  animation: slideImage 0.5s ease-out forwards;
+  clip-path: polygon(10% 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  color: var(--salmon-pink);
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out 0.2s forwards;
+}
+
+.title {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--onyx);
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out 0.4s forwards;
+}
+
+.description {
+  font-size: 1.125rem;
+  color: var(--sonic-silver);
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out 0.6s forwards;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--salmon-pink);
+  color: var(--white);
+  padding: 1rem 2rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.5s ease-out 0.8s forwards;
+}
+
+.button:hover {
+  background: var(--onyx);
+  transform: translateY(-2px);
+}
+
+.buttonIcon {
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.button:hover .buttonIcon {
+  transform: translateX(5px);
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 3rem;
+  background: var(--white);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--onyx);
+  transition: all 0.3s ease;
+  opacity: 0.7;
+}
+
+.navButton:hover {
+  opacity: 1;
+  background: var(--salmon-pink);
+  color: var(--white);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.navButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.prevButton {
+  left: 2rem;
+}
+
+.nextButton {
+  right: 2rem;
+}
+
+.indicators {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1rem;
+  z-index: 2;
+}
+
+.indicator {
+  width: 3rem;
+  height: 0.25rem;
+  background: var(--white);
+  border: none;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.3s ease;
+}
+
+.indicator:hover {
+  opacity: 0.8;
+}
+
+.indicator.active {
+  opacity: 1;
+  background: var(--salmon-pink);
+}
+
+/* Animations */
+@keyframes slideContent {
+  from {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideImage {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Styles */
+@media (max-width: 1200px) {
+  .title {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .hero {
+    height: calc(100vh - 150px);
+  }
+
+  .title {
+    font-size: 3rem;
+  }
+
+  .slideImage {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: calc(100vh - 120px);
+    min-height: 500px;
+  }
+
+  .slide {
+    padding: 0 1.5rem;
+  }
+
+  .slideContent {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .slideImage {
+    opacity: 0.3;
+    width: 100%;
+    clip-path: none;
+  }
+
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.25rem;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .navButton {
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.25rem;
+  }
+
+  .prevButton {
+    left: 1rem;
+  }
+
+  .nextButton {
+    right: 1rem;
+  }
+
+  .indicator {
+    width: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 450px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .button {
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+/* Focus Styles */
+.hero:focus {
+  outline: none;
+}
+
+.hero:focus-visible {
+  outline: 2px solid var(--salmon-pink);
+  outline-offset: 2px;
+}
+
+.navButton:focus {
+  outline: none;
+}
+
+.navButton:focus-visible {
+  outline: 2px solid var(--salmon-pink);
+  outline-offset: 2px;
+}
+
+.indicator:focus {
+  outline: none;
+}
+
+.indicator:focus-visible {
+  outline: 2px solid var(--salmon-pink);
+  outline-offset: 2px;
+}
+
+/* Pause animations when user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .slider,
+  .slide,
+  .slideContent,
+  .slideImage,
+  .subtitle,
+  .title,
+  .description,
+  .button {
+    animation: none;
+    transition: none;
+  }
+} 

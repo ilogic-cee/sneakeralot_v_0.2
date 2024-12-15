@@ -1,0 +1,15 @@
+.main {
+  min-height: 100vh;
+  background: var(--white);
+}
+
+/* Add spacing between sections */
+.main > section {
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 768px) {
+  .main > section {
+    margin-bottom: 3rem;
+  }
+} 

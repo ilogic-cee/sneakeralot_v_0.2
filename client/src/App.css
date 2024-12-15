@@ -1,0 +1,46 @@
+:root {
+  /* Colors */
+  --salmon-pink: #ff8f9c;
+  --white: #ffffff;
+  --cultured: #f5f5f5;
+  --onyx: #454545;
+  --sonic-silver: #757575;
+
+  /* Transitions */
+  --transition-timing: 0.2s ease;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Add padding to main content to account for fixed mobile nav */
+@media (max-width: 768px) {
+  .App {
+    padding-bottom: 60px;
+  }
+} 

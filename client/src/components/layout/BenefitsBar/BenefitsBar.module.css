@@ -1,0 +1,289 @@
+.benefitsBar {
+  background: var(--color-background-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+  position: relative;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.benefitsBar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.05),
+    transparent
+  );
+  animation: shine 12s infinite linear;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+.benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.6s backwards;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.benefit:nth-child(1) { animation-delay: 0.1s; }
+.benefit:nth-child(2) { animation-delay: 0.2s; }
+.benefit:nth-child(3) { animation-delay: 0.3s; }
+.benefit:nth-child(4) { animation-delay: 0.4s; }
+.benefit:nth-child(5) { animation-delay: 0.5s; }
+.benefit:nth-child(6) { animation-delay: 0.6s; }
+
+.benefit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  padding: 2px;
+  background: linear-gradient(45deg, transparent, rgba(var(--color-primary-rgb), 0.3), transparent);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.benefit:hover::after,
+.benefit.active::after {
+  opacity: 1;
+}
+
+.benefit:hover,
+.benefit.active {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-3px) translateZ(20px) scale(1.02);
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(var(--color-primary-rgb), 0.1);
+}
+
+.benefit.featured::before {
+  content: 'Featured';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 4px;
+  opacity: 0.9;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(var(--color-primary-rgb), 0.1);
+  color: var(--color-primary);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(40px);
+}
+
+.iconWrapper::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  transform: scale(0.5);
+}
+
+.benefit:hover .iconWrapper::after {
+  opacity: 1;
+  transform: scale(1);
+  transition: transform 0.6s ease, opacity 0.3s ease;
+}
+
+.iconWrapper ion-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.benefit:hover .iconWrapper ion-icon,
+.benefit.active .iconWrapper ion-icon {
+  transform: scale(1.2);
+}
+
+.content {
+  flex: 1;
+}
+
+.content h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-light);
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.content p {
+  font-size: 0.9rem;
+  color: var(--color-text-light-secondary);
+  margin: 0.3rem 0 0;
+  transition: color 0.3s ease;
+}
+
+.details {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.85rem;
+  color: var(--color-text-light-secondary);
+  animation: slideDown 0.3s ease forwards;
+  transform-origin: top;
+  position: relative;
+  transform: translateZ(30px);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  20%, 100% {
+    left: 100%;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(var(--color-primary-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--color-primary-rgb), 0);
+  }
+}
+
+.benefit.new {
+  animation: rotateIn 0.6s ease-out, pulse 2s infinite;
+}
+
+.benefit.new::before {
+  content: 'New';
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--color-primary);
+  color: white;
+  border-radius: 4px;
+  opacity: 0.9;
+}
+
+@media (max-width: 1200px) {
+  .container {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .benefitsBar {
+    padding: 0.75rem 0;
+  }
+
+  .container {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    padding: 0 1rem;
+  }
+
+  .benefit {
+    padding: 0.75rem;
+  }
+
+  .iconWrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .iconWrapper ion-icon {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .benefit {
+    margin: 0 0.5rem;
+  }
+
+  .content h3 {
+    font-size: 0.95rem;
+  }
+
+  .content p {
+    font-size: 0.85rem;
+  }
+
+  .details {
+    font-size: 0.8rem;
+  }
+} 

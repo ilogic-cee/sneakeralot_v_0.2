@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Confirmation - SneakerAlot</title>
+</head>
+<body>
+    <h1>Thank you for your order, {{customerName}}!</h1>
+    <p>Your order #{{orderId}} has been confirmed.</p>
+    
+    <h2>Order Details:</h2>
+    <ul>
+    {{#each items}}
+        <li>{{this.name}} - {{this.quantity}} x R{{this.price}}</li>
+    {{/each}}
+    </ul>
+    
+    <p>Total: R{{total}}</p>
+    
+    <p>We'll notify you when your order ships.</p>
+</body>
+</html> 

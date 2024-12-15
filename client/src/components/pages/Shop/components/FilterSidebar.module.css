@@ -1,0 +1,315 @@
+.sidebar {
+  background: var(--color-background);
+  border-radius: 12px;
+  padding: 1.5rem;
+  height: fit-content;
+  border: 1px solid var(--color-border);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header h2 {
+  font-size: 1.25rem;
+  margin: 0;
+  color: var(--color-text);
+}
+
+.clearAll {
+  background: none;
+  border: none;
+  color: var(--color-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.clearAll:hover {
+  background: var(--color-primary-transparent);
+}
+
+/* Filter Sections */
+.filterSection {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.filterSection:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.sectionHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sectionHeader:hover {
+  color: var(--color-primary);
+}
+
+.sectionHeader h3 {
+  font-size: 1rem;
+  margin: 0;
+  color: inherit;
+}
+
+.sectionHeader ion-icon {
+  font-size: 1.25rem;
+  transition: transform 0.2s ease;
+}
+
+/* Filter Options */
+.filterOptions {
+  margin-top: 1rem;
+}
+
+/* Checkbox Styles */
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  user-select: none;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  transition: color 0.2s ease;
+}
+
+.checkboxLabel:hover {
+  color: var(--color-primary);
+}
+
+.checkboxLabel input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: relative;
+  height: 18px;
+  width: 18px;
+  margin-right: 0.75rem;
+  border: 2px solid var(--color-border);
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.checkboxLabel:hover .checkmark {
+  border-color: var(--color-primary);
+}
+
+.checkboxLabel input:checked ~ .checkmark {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+  left: 5px;
+  top: 2px;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkboxLabel input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Color Options */
+.colorOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.colorOption {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  background-color: var(--color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.colorOption:hover {
+  transform: scale(1.1);
+}
+
+.colorOption.selected {
+  border-color: var(--color-primary);
+}
+
+.colorOption.selected::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 2px solid var(--color-primary);
+  border-radius: 50%;
+}
+
+/* Size Options */
+.sizeOptions {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr));
+  gap: 0.5rem;
+}
+
+.sizeOption {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+}
+
+.sizeOption:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.sizeOption.selected {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: white;
+}
+
+/* Price Range */
+.priceRange {
+  margin-top: 1rem;
+}
+
+.priceInputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.priceInput {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.priceInput label {
+  font-size: 0.75rem;
+  color: var(--color-text-light);
+}
+
+.inputWithPrefix {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: 0 0.5rem;
+  transition: border-color 0.2s ease;
+}
+
+.inputWithPrefix:focus-within {
+  border-color: var(--color-primary);
+}
+
+.inputWithPrefix span {
+  color: var(--color-text-light);
+  font-size: 0.875rem;
+}
+
+.inputWithPrefix input {
+  width: 100%;
+  border: none;
+  padding: 0.5rem;
+  background: none;
+  color: var(--color-text);
+  font-size: 0.875rem;
+}
+
+.inputWithPrefix input:focus {
+  outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    border-radius: 0;
+    overflow-y: auto;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
+
+/* High Contrast Mode */
+@media (forced-colors: active) {
+  .checkmark {
+    border: 2px solid ButtonText;
+  }
+
+  .checkboxLabel input:checked ~ .checkmark {
+    background-color: Highlight;
+    border-color: Highlight;
+  }
+
+  .colorOption {
+    border: 2px solid ButtonText;
+  }
+
+  .colorOption.selected {
+    border-color: Highlight;
+  }
+
+  .sizeOption {
+    border: 1px solid ButtonText;
+  }
+
+  .sizeOption.selected {
+    background: Highlight;
+    border-color: Highlight;
+  }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background: var(--color-background-dark);
+  }
+
+  .inputWithPrefix {
+    background: var(--color-background);
+  }
+} 

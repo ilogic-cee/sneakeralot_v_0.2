@@ -1,0 +1,84 @@
+/* Transition Variables */
+:root {
+  --transition-timing: 0.3s ease;
+  --transition-timing-slow: 0.5s ease;
+  --transition-timing-fast: 0.2s ease;
+}
+
+/* Common Transitions */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity var(--transition-timing);
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity var(--transition-timing);
+}
+
+/* Slide Transitions */
+.slide-enter {
+  transform: translateX(-100%);
+}
+
+.slide-enter-active {
+  transform: translateX(0);
+  transition: transform var(--transition-timing);
+}
+
+.slide-exit {
+  transform: translateX(0);
+}
+
+.slide-exit-active {
+  transform: translateX(-100%);
+  transition: transform var(--transition-timing);
+}
+
+/* Scale Transitions */
+.scale-enter {
+  transform: scale(0.9);
+  opacity: 0;
+}
+
+.scale-enter-active {
+  transform: scale(1);
+  opacity: 1;
+  transition: all var(--transition-timing);
+}
+
+.scale-exit {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.scale-exit-active {
+  transform: scale(0.9);
+  opacity: 0;
+  transition: all var(--transition-timing);
+}
+
+/* Common Element Transitions */
+.button-transition {
+  transition: all var(--transition-timing-fast);
+}
+
+.link-transition {
+  transition: color var(--transition-timing-fast);
+}
+
+.hover-transition {
+  transition: transform var(--transition-timing-fast);
+}
+
+.hover-transition:hover {
+  transform: translateY(-2px);
+} 
