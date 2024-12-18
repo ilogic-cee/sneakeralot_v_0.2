@@ -1,154 +1,180 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import styles from './CustomerReviews.module.css';
 
-const CustomerReviews = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+const reviews = [
+  {
+    id: 1,
+    name: "Sarah Johnson",
+    avatar: "/assets/images/reviews/avatar-1.jpg",
+    rating: 5,
+    date: "2024-01-15",
+    product: "Nike Air Max 270",
+    review: "Absolutely love these sneakers! The comfort is unmatched, and they look even better in person. Perfect for both casual wear and workouts.",
+    verified: true
+  },
+  {
+    id: 2,
+    name: "Michael Chen",
+    avatar: "/assets/images/reviews/avatar-2.jpg",
+    rating: 4,
+    date: "2024-01-12",
+    product: "Adidas Ultra Boost 21",
+    review: "Great running shoes with excellent support. The boost technology really makes a difference in comfort during long runs.",
+    verified: true
+  },
+  {
+    id: 3,
+    name: "Emily Rodriguez",
+    avatar: "/assets/images/reviews/avatar-3.jpg",
+    rating: 5,
+    date: "2024-01-10",
+    product: "Jordan 1 Retro High",
+    review: "These are my first Jordans and I'm impressed! The quality is outstanding and they're surprisingly comfortable for everyday wear.",
+    verified: true
+  },
+  {
+    id: 4,
+    name: "David Kim",
+    avatar: "/assets/images/reviews/avatar-4.jpg",
+    rating: 5,
+    date: "2024-01-08",
+    product: "New Balance 990v5",
+    review: "The perfect balance of style and comfort. These have become my go-to shoes for everything from running errands to light workouts.",
+    verified: true
+  }
+];
 
-  const reviews = [
-    {
-      id: 1,
-      name: "Sarah Johnson",
-      rating: 5,
-      date: "2024-01-15",
-      avatar: "/assets/images/reviews/avatar1.jpg",
-      review: "Amazing selection of sneakers! The quality is outstanding, and the customer service team was incredibly helpful.",
-      purchasedItem: "Nike Air Max 270",
-      verifiedPurchase: true
-    },
-    {
-      id: 2,
-      name: "Michael Chen",
-      rating: 4,
-      date: "2024-01-12",
-      avatar: "/assets/images/reviews/avatar2.jpg",
-      review: "Fast shipping and great prices. The size guide was spot on. Will definitely shop here again!",
-      purchasedItem: "Adidas Ultra Boost",
-      verifiedPurchase: true
-    },
-    {
-      id: 3,
-      name: "Emily Rodriguez",
-      rating: 5,
-      date: "2024-01-10",
-      avatar: "/assets/images/reviews/avatar3.jpg",
-      review: "Found some rare editions that I couldn't get anywhere else. The authenticity guarantee gives great peace of mind.",
-      purchasedItem: "Jordan Retro 4",
-      verifiedPurchase: true
+const CustomerReviews = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const nextReview = useCallback(() => {
+    if (!isAnimating) {
+      setIsAnimating(true);
+      setActiveIndex((current) => (current + 1) % reviews.length);
     }
-  ];
+  }, [isAnimating]);
+
+  const prevReview = useCallback(() => {
+    if (!isAnimating) {
+      setIsAnimating(true);
+      setActiveIndex((current) => (current - 1 + reviews.length) % reviews.length);
+    }
+  }, [isAnimating]);
+
+  const goToReview = useCallback((index) => {
+    if (!isAnimating && index !== activeIndex) {
+      setIsAnimating(true);
+      setActiveIndex(index);
+    }
+  }, [isAnimating, activeIndex]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % reviews.length);
-    }, 5000);
+    const timer = setInterval(nextReview, 5000);
+    return () => clearInterval(timer);
+  }, [nextReview]);
 
-    return () => clearInterval(interval);
-  }, [reviews.length]);
-
-  const handleSlideChange = (index) => {
-    setCurrentSlide(index);
+  const handleTransitionEnd = () => {
+    setIsAnimating(false);
   };
 
   const renderStars = (rating) => {
     return [...Array(5)].map((_, index) => (
-      <span
+      <ion-icon
         key={index}
-        className={`${styles.star} ${index < rating ? styles.filled : ''}`}
+        name={index < rating ? 'star' : 'star-outline'}
+        style={{ color: 'var(--color-primary)' }}
         aria-hidden="true"
-      >
-        <ion-icon name={index < rating ? "star" : "star-outline"}></ion-icon>
-      </span>
+      />
     ));
   };
 
-  return (
-    <section className={styles.customerReviews} aria-labelledby="reviews-title">
-      <div className={styles.container}>
-        <header className={styles.sectionHeader}>
-          <h2 id="reviews-title" className={styles.title}>
-            What Our Customers Say
-          </h2>
-          <p className={styles.subtitle}>
-            Real reviews from verified purchasers
-          </p>
-        </header>
+  const formatDate = (dateString) => {
+    return new Date(dateString).toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
 
-        <div className={styles.reviewsSlider} role="region" aria-label="Customer reviews slider">
+  return (
+    <section className={styles.customerReviews} aria-labelledby="customer-reviews-title">
+      <div className={styles.container}>
+        <h2 id="customer-reviews-title" className={styles.title}>
+          What Our Customers Say
+        </h2>
+        <p className={styles.subtitle}>
+          Real reviews from verified customers
+        </p>
+
+        <div className={styles.carousel}>
           <div 
-            className={styles.slidesTrack}
-            style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            className={styles.track}
+            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+            onTransitionEnd={handleTransitionEnd}
           >
             {reviews.map((review) => (
-              <div key={review.id} className={styles.reviewSlide}>
-                <div className={styles.reviewCard}>
-                  <div className={styles.reviewHeader}>
-                    <img
-                      src={review.avatar}
-                      alt={`${review.name}'s avatar`}
-                      className={styles.avatar}
-                      loading="lazy"
-                    />
-                    <div className={styles.reviewerInfo}>
-                      <h3 className={styles.reviewerName}>{review.name}</h3>
-                      <div className={styles.rating} aria-label={`Rated ${review.rating} out of 5 stars`}>
-                        {renderStars(review.rating)}
-                      </div>
-                    </div>
-                  </div>
-
-                  <blockquote className={styles.reviewContent}>
-                    <p>{review.review}</p>
-                  </blockquote>
-
-                  <footer className={styles.reviewFooter}>
-                    <div className={styles.purchaseInfo}>
-                      <span className={styles.purchasedItem}>
-                        Purchased: {review.purchasedItem}
-                      </span>
-                      {review.verifiedPurchase && (
-                        <span className={styles.verifiedBadge}>
-                          <ion-icon name="checkmark-circle"></ion-icon>
+              <div key={review.id} className={styles.review}>
+                <div className={styles.header}>
+                  <img
+                    src={review.avatar}
+                    alt=""
+                    className={styles.avatar}
+                    loading="lazy"
+                  />
+                  <div className={styles.info}>
+                    <div className={styles.name}>
+                      {review.name}
+                      {review.verified && (
+                        <span className={styles.verified}>
+                          <ion-icon name="checkmark-circle" aria-hidden="true" />
                           Verified Purchase
                         </span>
                       )}
                     </div>
-                    <time className={styles.reviewDate} dateTime={review.date}>
-                      {new Date(review.date).toLocaleDateString()}
-                    </time>
-                  </footer>
+                    <div className={styles.rating}>
+                      {renderStars(review.rating)}
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.content}>
+                  <p className={styles.text}>{review.review}</p>
+                  <div className={styles.meta}>
+                    <span className={styles.product}>{review.product}</span>
+                    <span className={styles.date}>{formatDate(review.date)}</span>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className={styles.sliderControls}>
+          <button
+            className={`${styles.navButton} ${styles.prev}`}
+            onClick={prevReview}
+            aria-label="Previous review"
+          >
+            <ion-icon name="chevron-back-outline" aria-hidden="true" />
+          </button>
+
+          <button
+            className={`${styles.navButton} ${styles.next}`}
+            onClick={nextReview}
+            aria-label="Next review"
+          >
+            <ion-icon name="chevron-forward-outline" aria-hidden="true" />
+          </button>
+
+          <div className={styles.dots}>
             {reviews.map((_, index) => (
               <button
                 key={index}
-                className={`${styles.sliderDot} ${index === currentSlide ? styles.active : ''}`}
-                onClick={() => handleSlideChange(index)}
+                className={`${styles.dot} ${index === activeIndex ? styles.active : ''}`}
+                onClick={() => goToReview(index)}
                 aria-label={`Go to review ${index + 1}`}
-                aria-current={index === currentSlide}
+                aria-current={index === activeIndex}
               />
             ))}
-          </div>
-        </div>
-
-        <div className={styles.reviewStats}>
-          <div className={styles.stat}>
-            <span className={styles.statNumber}>4.8</span>
-            <div className={styles.statRating}>
-              {renderStars(5)}
-            </div>
-            <span className={styles.statLabel}>Average Rating</span>
-          </div>
-          <div className={styles.stat}>
-            <span className={styles.statNumber}>10k+</span>
-            <span className={styles.statLabel}>Verified Reviews</span>
-          </div>
-          <div className={styles.stat}>
-            <span className={styles.statNumber}>98%</span>
-            <span className={styles.statLabel}>Satisfied Customers</span>
           </div>
         </div>
       </div>

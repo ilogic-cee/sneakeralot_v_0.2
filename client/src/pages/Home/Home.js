@@ -5,20 +5,20 @@ import FeaturedProducts from '../../components/home/FeaturedProducts/FeaturedPro
 import SpecialOffers from '../../components/home/SpecialOffers/SpecialOffers';
 import FeaturedBrands from '../../components/home/FeaturedBrands/FeaturedBrands';
 import CustomerReviews from '../../components/home/CustomerReviews/CustomerReviews';
-import InstagramFeed from '../../components/home/InstagramFeed/InstagramFeed';
+import Newsletter from '../../components/home/Newsletter/Newsletter';
 import styles from './Home.module.css';
 
 const Home = () => {
   return (
-    <main className={styles.main}>
+    <div className={styles.home}>
       <Hero />
       <FeaturedCategories />
       <FeaturedProducts />
       <SpecialOffers />
       <FeaturedBrands />
       <CustomerReviews />
-      <InstagramFeed />
-    </main>
+      <Newsletter />
+    </div>
   );
 };
 

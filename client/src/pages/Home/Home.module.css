@@ -13,3 +13,14 @@
     margin-bottom: 3rem;
   }
 } 
+
+.home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Add spacing between sections */
+.home > * + * {
+  margin-top: var(--spacing-xl);
+} 

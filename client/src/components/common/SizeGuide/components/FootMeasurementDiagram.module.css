@@ -1,0 +1,232 @@
+.diagramContainer {
+  background: var(--color-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--spacing-md);
+}
+
+.toggleButton {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-background-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.toggleButton:hover {
+  background: var(--color-background-hover);
+}
+
+.toggleButton ion-icon {
+  font-size: 1.2em;
+}
+
+.diagram {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2/3;
+  margin-bottom: var(--spacing-lg);
+}
+
+.footOutline {
+  width: 100%;
+  height: 100%;
+  color: var(--color-text-light);
+}
+
+.measurementLine {
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.measurementLine.visible {
+  opacity: 1;
+}
+
+.measurementPoint {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+}
+
+.measurementPoint.visible,
+.measurementPoint:hover,
+.measurementPoint.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pointMarker {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  cursor: pointer;
+  transition: transform var(--transition-fast);
+}
+
+.pointMarker ion-icon {
+  font-size: 1.5em;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.measurementPoint:hover .pointMarker,
+.measurementPoint.active .pointMarker {
+  transform: scale(1.2);
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(8px);
+  background: var(--color-background);
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  width: max-content;
+  max-width: 200px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--transition-fast);
+  z-index: 1;
+}
+
+.tooltip::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  width: 8px;
+  height: 8px;
+  background: var(--color-background);
+}
+
+.measurementPoint:hover .tooltip,
+.measurementPoint.active .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(4px);
+}
+
+.tooltip h4 {
+  margin: 0 0 var(--spacing-xs);
+  color: var(--color-text);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.tooltip p {
+  margin: 0;
+  color: var(--color-text-light);
+  font-size: var(--font-size-xs);
+}
+
+.legend {
+  display: flex;
+  gap: var(--spacing-md);
+  justify-content: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+}
+
+.legendMarker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-primary);
+}
+
+.legendLine {
+  width: 20px;
+  height: 2px;
+  background: var(--color-text-light);
+  position: relative;
+}
+
+.legendLine::before,
+.legendLine::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-text-light);
+}
+
+.legendLine::before {
+  left: 0;
+}
+
+.legendLine::after {
+  right: 0;
+}
+
+.instructions {
+  text-align: center;
+  color: var(--color-text-light);
+  font-size: var(--font-size-sm);
+}
+
+.instructions p {
+  margin: 0 0 var(--spacing-xs);
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.measurementPoint.active .pointMarker {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .diagramContainer {
+    padding: var(--spacing-md);
+  }
+
+  .tooltip {
+    max-width: 150px;
+  }
+
+  .legend {
+    flex-direction: column;
+    align-items: center;
+  }
+} 

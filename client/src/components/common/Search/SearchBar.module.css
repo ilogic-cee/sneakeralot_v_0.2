@@ -1,0 +1,448 @@
+/* Nike Search Bar Variables */
+:root {
+  /* Brand Colors */
+  --nike-grey-100: rgb(255, 255, 255);
+  --nike-grey-200: rgb(245, 245, 245);
+  --nike-grey-300: rgb(238, 238, 238);
+  --nike-grey-400: rgb(115, 115, 115);
+  --nike-grey-900: rgb(66, 66, 66);
+  
+  /* Functional Colors */
+  --search-bg: rgb(245, 245, 245);
+  --search-bg-active: var(--nike-grey-100);
+  --search-text: rgb(66, 66, 66);
+  --search-placeholder: rgb(115, 115, 115);
+  --search-icon: rgb(115, 115, 115);
+  --search-border: rgb(238, 238, 238);
+  --search-hover-bg: rgb(238, 238, 238);
+  --search-overlay: rgba(255, 255, 255, 0.98);
+  
+  /* Animation */
+  --transition-quick: 80ms;
+  --transition-medium: 200ms;
+  --bezier-sharp: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+/* Search Container */
+.searchContainer {
+  position: relative;
+  width: 180px;
+  height: 40px;
+  z-index: 1000;
+}
+
+/* Search Bar */
+.searchBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: var(--search-bg);
+  border: 1px solid var(--search-border);
+  border-radius: 50px;
+  height: 40px;
+  padding: 0 8px;
+  transition: all var(--transition-quick) var(--bezier-sharp);
+  width: 100%;
+  cursor: text;
+}
+
+.searchBar:hover {
+  background: var(--search-hover-bg);
+  border-color: rgb(220, 220, 220);
+}
+
+/* Input Field */
+.searchInput {
+  flex: 1;
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--search-text);
+  width: 100%;
+  height: 100%;
+  padding: 0 8px;
+  cursor: text;
+}
+
+.searchInput::placeholder {
+  color: var(--search-placeholder);
+  font-weight: 400;
+  opacity: 1;
+}
+
+/* Search Button */
+.searchButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--search-icon);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all var(--transition-quick) var(--bezier-sharp);
+}
+
+.searchButton:hover {
+  background: var(--search-hover-bg);
+}
+
+.searchButton ion-icon {
+  font-size: 20px;
+}
+
+/* Active State - Full Screen Overlay */
+.searchContainer.active {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Active Search Bar */
+.active .searchBar {
+  position: relative;
+  top: 32px;
+  width: min(92%, 820px);
+  height: 48px;
+  background: var(--search-bg-active);
+  padding: 0 16px;
+  border: 1px solid rgb(228, 228, 228);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  z-index: 1000000;
+}
+
+/* Suggestions Panel */
+.active .suggestionsPanel {
+  position: relative;
+  top: 88px;
+  width: min(92%, 820px);
+  max-height: calc(100vh - 104px);
+  background: var(--search-bg-active);
+  border-radius: 12px;
+  overflow: hidden auto;
+  border: 1px solid rgb(228, 228, 228);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  z-index: 1000000;
+}
+
+/* Hide all other content when search is active */
+:global(body.search-active) {
+  overflow: hidden !important;
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+}
+
+:global(body.search-active) :global(*:not(.searchContainer):not(.searchContainer *)) {
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Suggestion Sections */
+.suggestionSection {
+  padding: 20px 24px;
+}
+
+.suggestionSection:not(:last-child) {
+  border-bottom: 1px solid var(--search-border);
+}
+
+/* Section Headers */
+.sectionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.suggestionSection h3 {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--search-text);
+}
+
+/* Suggestion Items */
+.suggestion {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  color: var(--search-text);
+  cursor: pointer;
+  transition: background-color var(--transition-quick) var(--bezier-sharp);
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.suggestion:hover,
+.suggestion.selected {
+  background: var(--search-hover-bg);
+}
+
+.suggestionImage {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.suggestionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.suggestionTitle {
+  font-weight: 500;
+}
+
+.suggestionCategory {
+  font-size: 12px;
+  color: var(--search-placeholder);
+}
+
+/* Trending List */
+.trendingList {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.trendingList .suggestion {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+
+.trendingList .suggestion ion-icon {
+  font-size: 16px;
+  color: var(--search-icon);
+  margin-right: 12px;
+}
+
+.searchTerm {
+  flex: 1;
+  font-weight: 400;
+}
+
+.searchCount {
+  font-size: 12px;
+  color: var(--search-placeholder);
+  margin-left: 8px;
+}
+
+/* Popular Products List */
+.popularList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.popularList .suggestion {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  gap: 16px;
+}
+
+.productImage {
+  width: 70px;
+  height: 70px;
+  background: rgb(245, 245, 245);
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.suggestionImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.suggestionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+  flex: 1;
+}
+
+.suggestionTitle {
+  font-weight: 500;
+  color: var(--search-text);
+}
+
+.suggestionCategory {
+  font-size: 12px;
+  color: var(--search-placeholder);
+}
+
+.suggestionPrice {
+  font-size: 14px;
+  color: var(--search-text);
+  margin-top: 2px;
+}
+
+/* Categories List */
+.categoriesList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 4px;
+}
+
+.categoriesList .suggestion {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  gap: 12px;
+  text-align: left;
+}
+
+.categoriesList .suggestion ion-icon {
+  font-size: 20px;
+  color: var(--search-icon);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 960px) {
+  .categoriesList {
+    grid-template-columns: 1fr;
+  }
+
+  .productImage {
+    width: 60px;
+    height: 60px;
+  }
+
+  .suggestionTitle,
+  .searchTerm {
+    font-size: 15px;
+  }
+}
+
+/* Section Animations */
+.suggestionSection {
+  animation: fadeIn 200ms var(--bezier-sharp);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Experience */
+@media (max-width: 960px) {
+  .searchContainer {
+    width: 40px;
+    height: 40px;
+  }
+
+  .searchBar {
+    padding: 0;
+    justify-content: center;
+  }
+
+  .searchInput {
+    display: none;
+  }
+
+  .searchButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .active {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  .active .searchBar {
+    top: max(12px, env(safe-area-inset-top));
+    padding: 0 12px;
+  }
+
+  .active .searchInput {
+    display: block;
+  }
+
+  .suggestionsPanel {
+    top: 68px;
+    border-radius: 12px 12px 0 0;
+    max-height: calc(100vh - 80px);
+    position: relative;
+    margin-top: 8px;
+  }
+
+  .suggestionSection {
+    padding: 16px 20px;
+  }
+
+  .suggestion {
+    padding: 8px;
+  }
+
+  .trendingList .suggestion,
+  .categoriesList .suggestion {
+    padding: 12px;
+  }
+  
+  .suggestion span {
+    font-size: 16px;
+  }
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --nike-grey-100: rgb(255, 255, 255);
+    --nike-grey-200: rgb(245, 245, 245);
+    --nike-grey-300: rgb(238, 238, 238);
+    --nike-grey-400: rgb(115, 115, 115);
+    --nike-grey-900: rgb(66, 66, 66);
+    --search-bg: rgb(245, 245, 245);
+    --search-hover-bg: rgb(238, 238, 238);
+    --search-overlay: rgba(255, 255, 255, 0.98);
+  }
+}
+
+/* Custom Scrollbar */
+.suggestionsPanel::-webkit-scrollbar {
+  width: 6px;
+}
+
+.suggestionsPanel::-webkit-scrollbar-track {
+  background: var(--nike-grey-200);
+}
+
+.suggestionsPanel::-webkit-scrollbar-thumb {
+  background: var(--nike-grey-300);
+  border-radius: 3px;
+}
+
+.suggestionsPanel::-webkit-scrollbar-thumb:hover {
+  background: var(--nike-grey-400);
+} 

@@ -32,15 +32,20 @@ button {
   font-family: inherit;
 }
 
-.App {
+.app {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
+main {
+  flex: 1;
+  padding-top: var(--spacing-md);
+}
+
 /* Add padding to main content to account for fixed mobile nav */
 @media (max-width: 768px) {
-  .App {
+  .app {
     padding-bottom: 60px;
   }
 } 

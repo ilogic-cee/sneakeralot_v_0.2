@@ -2,270 +2,180 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './FeaturedProducts.module.css';
 
+const products = [
+  {
+    id: 1,
+    name: "Nike Air Max 270",
+    price: 149.99,
+    image: "/assets/images/products/nike-airmax-270.jpg",
+    brand: "Nike",
+    rating: 4.5,
+    reviews: 128,
+    path: "/product/nike-air-max-270",
+    discount: 0
+  },
+  {
+    id: 2,
+    name: "Adidas Ultra Boost 21",
+    price: 179.99,
+    image: "/assets/images/products/adidas-ultraboost-21.jpg",
+    brand: "Adidas",
+    rating: 4.8,
+    reviews: 95,
+    path: "/product/adidas-ultra-boost-21",
+    discount: 15
+  },
+  {
+    id: 3,
+    name: "Jordan 1 Retro High",
+    price: 189.99,
+    image: "/assets/images/products/jordan-1-retro.jpg",
+    brand: "Jordan",
+    rating: 4.9,
+    reviews: 156,
+    path: "/product/jordan-1-retro-high",
+    discount: 0
+  },
+  {
+    id: 4,
+    name: "Puma RS-X³",
+    price: 129.99,
+    image: "/assets/images/products/puma-rsx.jpg",
+    brand: "Puma",
+    rating: 4.3,
+    reviews: 74,
+    path: "/product/puma-rsx",
+    discount: 20
+  },
+  {
+    id: 5,
+    name: "New Balance 990v5",
+    price: 174.99,
+    image: "/assets/images/products/nb-990v5.jpg",
+    brand: "New Balance",
+    rating: 4.7,
+    reviews: 89,
+    path: "/product/new-balance-990v5",
+    discount: 0
+  },
+  {
+    id: 6,
+    name: "Yeezy Boost 350 V2",
+    price: 229.99,
+    image: "/assets/images/products/yeezy-350.jpg",
+    brand: "Adidas",
+    rating: 4.6,
+    reviews: 203,
+    path: "/product/yeezy-boost-350-v2",
+    discount: 0
+  }
+];
+
 const FeaturedProducts = () => {
-  const [activeFilter, setActiveFilter] = useState('all');
+  const [hoveredProduct, setHoveredProduct] = useState(null);
 
-  const filters = [
-    { id: 'all', label: 'All Products' },
-    { id: 'new', label: 'New Arrivals' },
-    { id: 'trending', label: 'Trending' },
-    { id: 'bestsellers', label: 'Best Sellers' }
-  ];
-
-  const products = [
-    {
-      id: 1,
-      name: "Nike Air Max 270",
-      price: 2499.99,
-      originalPrice: 2999.99,
-      image: "/assets/images/products/nike-airmax-270.jpg",
-      category: "new",
-      rating: 4.5,
-      reviewCount: 128,
-      colors: ["Black/White", "Red/Black", "Blue/White"],
-      sizes: [7, 8, 9, 10, 11],
-      brand: "Nike"
-    },
-    {
-      id: 2,
-      name: "Adidas Ultra Boost",
-      price: 2799.99,
-      image: "/assets/images/products/adidas-ultraboost.jpg",
-      category: "trending",
-      rating: 4.8,
-      reviewCount: 256,
-      colors: ["White/Black", "Grey/White"],
-      sizes: [8, 9, 10, 11],
-      brand: "Adidas"
-    },
-    {
-      id: 3,
-      name: "Jordan 1 Retro High",
-      price: 3499.99,
-      image: "/assets/images/products/jordan-1-retro.jpg",
-      category: "bestsellers",
-      rating: 4.9,
-      reviewCount: 512,
-      colors: ["Chicago", "Royal Blue"],
-      sizes: [7, 8, 9, 10, 11, 12],
-      brand: "Jordan"
-    },
-    {
-      id: 4,
-      name: "Puma RS-X",
-      price: 1899.99,
-      originalPrice: 2299.99,
-      image: "/assets/images/products/puma-rsx.jpg",
-      category: "new",
-      rating: 4.3,
-      reviewCount: 96,
-      colors: ["White/Multi", "Black/Neon"],
-      sizes: [7, 8, 9, 10],
-      brand: "Puma"
-    },
-    {
-      id: 5,
-      name: "Nike Dunk Low",
-      price: 1999.99,
-      image: "/assets/images/products/nike-dunk-low.jpg",
-      category: "trending",
-      rating: 4.7,
-      reviewCount: 324,
-      colors: ["Panda", "University Blue"],
-      sizes: [7, 8, 9, 10, 11],
-      brand: "Nike"
-    },
-    {
-      id: 6,
-      name: "Adidas Yeezy Boost",
-      price: 4999.99,
-      image: "/assets/images/products/adidas-yeezy.jpg",
-      category: "bestsellers",
-      rating: 4.6,
-      reviewCount: 428,
-      colors: ["Static", "Zebra"],
-      sizes: [8, 9, 10, 11, 12],
-      brand: "Adidas"
-    },
-    {
-      id: 7,
-      name: "New Balance 550",
-      price: 2299.99,
-      image: "/assets/images/products/nb-550.jpg",
-      category: "trending",
-      rating: 4.4,
-      reviewCount: 186,
-      colors: ["White/Green", "White/Navy"],
-      sizes: [7, 8, 9, 10, 11],
-      brand: "New Balance"
-    },
-    {
-      id: 8,
-      name: "Vans Old Skool",
-      price: 1299.99,
-      image: "/assets/images/products/vans-oldskool.jpg",
-      category: "bestsellers",
-      rating: 4.5,
-      reviewCount: 642,
-      colors: ["Black/White", "Navy/White"],
-      sizes: [6, 7, 8, 9, 10, 11, 12],
-      brand: "Vans"
-    }
-  ];
-
-  const filteredProducts = activeFilter === 'all' 
-    ? products 
-    : products.filter(product => product.category === activeFilter);
+  const formatPrice = (price, discount = 0) => {
+    const finalPrice = price * (1 - discount / 100);
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD'
+    }).format(finalPrice);
+  };
 
   const renderStars = (rating) => {
-    return [...Array(5)].map((_, index) => (
-      <span 
-        key={index}
-        className={styles.star}
-        role="img"
-        aria-label={index < Math.floor(rating) ? "filled star" : "empty star"}
-      >
-        <ion-icon 
-          name={index < Math.floor(rating) ? "star" : 
-                (index === Math.floor(rating) && rating % 1 > 0) ? "star-half" : "star-outline"}
-        ></ion-icon>
-      </span>
-    ));
+    return [...Array(5)].map((_, index) => {
+      const filled = index < Math.floor(rating);
+      const half = !filled && index < Math.ceil(rating);
+      
+      return (
+        <ion-icon
+          key={index}
+          name={filled ? 'star' : half ? 'star-half' : 'star-outline'}
+          style={{ color: 'var(--color-primary)' }}
+          aria-hidden="true"
+        />
+      );
+    });
   };
 
   return (
-    <section className={styles.featuredProducts} aria-labelledby="featured-title">
+    <section className={styles.featuredProducts} aria-labelledby="featured-products-title">
       <div className={styles.container}>
-        <header className={styles.sectionHeader}>
-          <h2 id="featured-title" className={styles.title}>
-            Featured Products
-          </h2>
-          <p className={styles.subtitle}>
-            Explore our collection of premium sneakers
-          </p>
-        </header>
+        <h2 id="featured-products-title" className={styles.title}>
+          Featured Products
+        </h2>
+        <p className={styles.subtitle}>
+          Discover our most popular and trending sneakers
+        </p>
 
-        <div className={styles.filters} role="tablist" aria-label="Product filters">
-          {filters.map(filter => (
-            <button
-              key={filter.id}
-              className={`${styles.filterBtn} ${activeFilter === filter.id ? styles.active : ''}`}
-              onClick={() => setActiveFilter(filter.id)}
-              role="tab"
-              aria-selected={activeFilter === filter.id}
-              aria-controls="products-grid"
+        <div className={styles.grid}>
+          {products.map((product) => (
+            <Link
+              key={product.id}
+              to={product.path}
+              className={styles.product}
+              onMouseEnter={() => setHoveredProduct(product.id)}
+              onMouseLeave={() => setHoveredProduct(null)}
+              aria-label={`View ${product.name} details`}
             >
-              {filter.label}
-            </button>
-          ))}
-        </div>
-
-        <div 
-          id="products-grid"
-          className={styles.grid}
-          role="tabpanel"
-          aria-label={`${activeFilter} products`}
-        >
-          {filteredProducts.map(product => (
-            <article key={product.id} className={styles.productCard}>
-              <div className={styles.imageWrapper}>
+              <div className={styles.imageContainer}>
                 <img
                   src={product.image}
-                  alt={product.name}
-                  className={styles.productImage}
+                  alt=""
+                  className={styles.image}
                   loading="lazy"
                 />
-                <div className={styles.productActions}>
-                  <button 
-                    className={styles.actionBtn}
-                    aria-label="Add to wishlist"
-                  >
-                    <ion-icon name="heart-outline"></ion-icon>
-                  </button>
-                  <button 
-                    className={styles.actionBtn}
-                    aria-label="Quick view"
-                  >
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </button>
-                </div>
-                {product.originalPrice && (
+                {product.discount > 0 && (
                   <span className={styles.discount}>
-                    {Math.round((1 - product.price / product.originalPrice) * 100)}% OFF
+                    -{product.discount}%
                   </span>
                 )}
+                <div className={styles.overlay}>
+                  <button
+                    className={styles.quickView}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      // TODO: Implement quick view functionality
+                    }}
+                    aria-label={`Quick view ${product.name}`}
+                  >
+                    Quick View
+                  </button>
+                </div>
               </div>
 
-              <div className={styles.productInfo}>
-                <div className={styles.productBrand}>{product.brand}</div>
-                <h3 className={styles.productName}>
-                  <Link to={`/product/${product.id}`}>
-                    {product.name}
-                  </Link>
-                </h3>
+              <div className={styles.content}>
+                <div className={styles.brand}>{product.brand}</div>
+                <h3 className={styles.name}>{product.name}</h3>
                 
-                <div className={styles.productMeta}>
-                  <div className={styles.rating} aria-label={`Rated ${product.rating} out of 5 stars`}>
+                <div className={styles.rating}>
+                  <div className={styles.stars} aria-label={`Rated ${product.rating} out of 5 stars`}>
                     {renderStars(product.rating)}
-                    <span className={styles.reviewCount}>({product.reviewCount})</span>
                   </div>
-                  <div className={styles.pricing}>
-                    {product.originalPrice && (
-                      <span className={styles.originalPrice}>
-                        R{product.originalPrice.toFixed(2)}
-                      </span>
-                    )}
-                    <span className={styles.price}>
-                      R{product.price.toFixed(2)}
-                    </span>
-                  </div>
-                </div>
-
-                <div className={styles.productOptions}>
-                  <div className={styles.colors}>
-                    {product.colors.map((color, index) => (
-                      <button
-                        key={color}
-                        className={styles.colorOption}
-                        aria-label={`Select color ${color}`}
-                        title={color}
-                      />
-                    ))}
-                  </div>
-                  <div className={styles.sizes}>
-                    {product.sizes.slice(0, 3).map(size => (
-                      <span key={size} className={styles.size}>
-                        UK {size}
-                      </span>
-                    ))}
-                    {product.sizes.length > 3 && (
-                      <span className={styles.moreSize}>
-                        +{product.sizes.length - 3}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <button 
-                  className={styles.addToCart}
-                  aria-label={`Add ${product.name} to cart`}
-                >
-                  Add to Cart
-                  <span className={styles.icon}>
-                    <ion-icon name="bag-add-outline"></ion-icon>
+                  <span className={styles.reviews}>
+                    ({product.reviews})
                   </span>
-                </button>
+                </div>
+
+                <div className={styles.priceContainer}>
+                  {product.discount > 0 && (
+                    <span className={styles.originalPrice}>
+                      {formatPrice(product.price)}
+                    </span>
+                  )}
+                  <span className={styles.price}>
+                    {formatPrice(product.price, product.discount)}
+                  </span>
+                </div>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
 
-        <div className={styles.viewAll}>
-          <Link to="/products" className={styles.viewAllBtn}>
+        <div className={styles.action}>
+          <Link to="/products" className={styles.viewAll}>
             View All Products
-            <span className={styles.icon}>
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </span>
+            <ion-icon name="arrow-forward-outline" aria-hidden="true" />
           </Link>
         </div>
       </div>
